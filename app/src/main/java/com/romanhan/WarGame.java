@@ -5,14 +5,12 @@ package com.romanhan;
 
 import com.romanhan.cards.Rank;
 import com.romanhan.cards.Suit;
+import com.romanhan.cards.Card;
+
 
 public class WarGame {
 
     public static void main(String[] args) {
         System.out.println("War game");
-        Rank ace = Rank.ACE;
-        Suit clubs = Suit.CLUBS;
-
-        System.out.printf("[%s%c]", ace.getName(), clubs.getValue());
     }
 }

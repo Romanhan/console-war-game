@@ -6,13 +6,13 @@ public enum Suit {
     HEART('♥'),
     SPADE('♠');
 
-    private final char value;
+    private final char name;
 
-    Suit(char value) {
-        this.value = value;
+    Suit(char name) {
+        this.name = name;
     }
 
-    public char getValue() {
-        return value;
+    public char getName() {
+        return name;
     }
 }
