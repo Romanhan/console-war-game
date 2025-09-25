@@ -5,6 +5,9 @@
 *.ipr
 out/
 
+# VsCode
+.vscode/
+
 # Compiled class file
 *.class
 

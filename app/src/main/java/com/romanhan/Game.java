@@ -10,11 +10,11 @@ public class Game {
     private Player player1;
     private Player player2;
 
-    public Game() {
+    public Game(Scanner scanner) {
         LinkedList<Card> deck = createDeck();
         Collections.shuffle(deck);
         List<LinkedList<Card>> decks = splitDeck(deck);
-        String[] names = getPlayerNames();
+        String[] names = getPlayerNames(scanner);
         createPlayers(decks, names);
     }
 
@@ -23,14 +23,21 @@ public class Game {
         player2 = new Player(names[1], decks.getLast());
     }
 
-    private String[] getPlayerNames() {
-        Scanner scanner = new Scanner(System.in);
+    private String[] getPlayerNames(Scanner scanner) {
         System.out.println("Enter player 1 name");
         String name1 = scanner.nextLine();
         System.out.println("Enter player 2 name");
         String name2 = scanner.nextLine();
         scanner.close();
-        return new String[]{name1, name2};
+        return new String[] { name1, name2 };
+    }
+
+    public Player getPlayer1() {
+        return player1;
+    }
+
+    public Player getPlayer2() {
+        return player2;
     }
 
     private List<LinkedList<Card>> splitDeck(LinkedList<Card> deck) {

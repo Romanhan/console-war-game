@@ -3,14 +3,13 @@
  */
 package com.romanhan;
 
-import com.romanhan.cards.Rank;
-import com.romanhan.cards.Suit;
-import com.romanhan.cards.Card;
-
+import java.util.Scanner;
 
 public class WarGame {
 
     public static void main(String[] args) {
-        System.out.println("War game");
+        Scanner scanner = new Scanner(System.in);
+        new Game(scanner);
+        System.out.println("War game started");
     }
 }

@@ -18,6 +18,10 @@ public class Player {
         return name;
     }
 
+    public LinkedList<Card> getCards() {
+        return cards;
+    }
+
     public boolean hasCards() {
         return !cards.isEmpty();
     }
