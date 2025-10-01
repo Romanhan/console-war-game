@@ -1,5 +1,6 @@
-package com.romanhan;
+package com.romanhan.game;
 
+import com.romanhan.Player;
 import com.romanhan.cards.Card;
 import com.romanhan.cards.Rank;
 import com.romanhan.cards.Suit;
@@ -9,6 +10,7 @@ import java.util.*;
 public class Game {
     private Player player1;
     private Player player2;
+    private GameLogic gameLogic = new GameLogic();
 
     public Game(Scanner scanner) {
         LinkedList<Card> deck = createDeck();
@@ -16,6 +18,20 @@ public class Game {
         List<LinkedList<Card>> decks = splitDeck(deck);
         String[] names = getPlayerNames(scanner);
         createPlayers(decks, names);
+        System.out.println("Players created: " + player1.getName() + " and " + player2.getName());
+        game();
+    }
+
+    void game() {
+        System.out.println("War game started");
+        RoundResult result = gameLogic.compareCards(player1, player2);
+        if (result.isTie()) {
+            System.out.println("It's a tie! War!");
+        } else {
+            result.getWinner().addWonCards(result.getCardsWon());
+            System.out.printf("%s wins the round and takes %d cards%n", result.getWinner().getName(),
+                    result.getCardsWon().size());
+        }
     }
 
     private void createPlayers(List<LinkedList<Card>> decks, String[] names) {

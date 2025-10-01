@@ -1,4 +1,4 @@
-package com.romanhan;
+package com.romanhan.cards.game;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -7,6 +7,7 @@ import java.util.Scanner;
 import org.junit.jupiter.api.Test;
 
 import com.romanhan.cards.Card;
+import com.romanhan.game.Game;
 
 public class GameTest {
     @Test
@@ -25,10 +26,10 @@ public class GameTest {
         // Given
         Scanner scanner = new Scanner("Alice\nBob\n");
         // When
-        Game game = new Game(scanner);
+        Game game2 = new Game(scanner);
         // Then
-        assertEquals(26, game.getPlayer1().size());
-        assertEquals(26, game.getPlayer2().size());
+        assertEquals(26, game2.getPlayer1().size());
+        assertEquals(26, game2.getPlayer2().size());
     }
 
     @Test
@@ -43,5 +44,17 @@ public class GameTest {
         // Then
         LinkedList<Card> uniqueCards = new LinkedList<>(deck.stream().distinct().toList());
         assertEquals(52, uniqueCards.size());
+    }
+
+    @Test
+    void should_Play_One_Round() {
+        // Given
+        Scanner scanner = new Scanner("Alice\nBob\n");
+        // When
+        Game game = new Game(scanner);
+        game.game();
+        // Then
+        int totalCards = game.getPlayer1().size() + game.getPlayer2().size();
+        assertEquals(52, totalCards);
     }
 }
