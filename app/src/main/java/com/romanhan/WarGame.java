@@ -5,11 +5,13 @@ package com.romanhan;
 
 import java.util.Scanner;
 
+import com.romanhan.game.Game;
+
 public class WarGame {
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        new Game(scanner);
-        System.out.println("War game started");
+        Game game = new Game(scanner);
+        game.game();
     }
 }

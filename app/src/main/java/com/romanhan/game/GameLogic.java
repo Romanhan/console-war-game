@@ -17,11 +17,15 @@ public class GameLogic {
                 card2);
 
         if (card1.getRank() > card2.getRank()) {
-            System.out.printf("%s wins the round", player1Name);
+            System.out.printf("%s wins the round%n", player1Name);
             return new RoundResult(player1, List.of(card1, card2));
-        } else {
-            System.out.printf("%s wins the round", player2Name);
+        } else if (card2.getRank() > card1.getRank()) {
+            System.out.printf("%s wins the round%n", player2Name);
             return new RoundResult(player2, List.of(card1, card2));
+        } else {
+            RoundResult result = new RoundResult(null, List.of(card1, card2));
+            result.setTie(true);
+            return result;
         }
     }
 }

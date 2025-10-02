@@ -19,18 +19,29 @@ public class Game {
         String[] names = getPlayerNames(scanner);
         createPlayers(decks, names);
         System.out.println("Players created: " + player1.getName() + " and " + player2.getName());
-        game();
     }
 
-    void game() {
+    public void game() {
         System.out.println("War game started");
+        while (player1.hasCards() && player2.hasCards()) {
+            playRound();
+            System.out.printf("%s has %d cards, %s has %d cards%n", player1.getName(), player1.size(),
+                    player2.getName(), player2.size());
+            System.out.println("-------------------------");
+        }
+        if (player1.hasCards()) {
+            System.out.printf("%s wins the game!%n", player1.getName());
+        } else {
+            System.out.printf("%s wins the game!%n", player2.getName());
+        }
+    }
+
+    private void playRound() {
         RoundResult result = gameLogic.compareCards(player1, player2);
         if (result.isTie()) {
             System.out.println("It's a tie! War!");
         } else {
             result.getWinner().addWonCards(result.getCardsWon());
-            System.out.printf("%s wins the round and takes %d cards%n", result.getWinner().getName(),
-                    result.getCardsWon().size());
         }
     }
 
