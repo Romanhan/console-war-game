@@ -1,5 +1,6 @@
 package com.romanhan.game;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import com.romanhan.Player;
@@ -13,7 +14,7 @@ public class GameLogic {
         Card card1 = player1.drawCard();
         Card card2 = player2.drawCard();
 
-        System.out.printf("%s plays %s, %s plays %s%n", player1.getName(), card1, player2.getName(),
+        System.out.printf("%s plays %s, %s plays %s%n", player1Name, card1, player2Name,
                 card2);
 
         if (card1.getRank() > card2.getRank()) {
@@ -27,5 +28,22 @@ public class GameLogic {
             result.setTie(true);
             return result;
         }
+    }
+
+    RoundResult war(RoundResult previousResult, Player player1, Player player2) {
+        List<Card> warCards = new LinkedList<>();
+        warCards.addAll(previousResult.getCardsWon());
+
+        for (int i = 0; i < 3; i++) {
+            if (player1.hasCards()) {
+                warCards.add(player1.drawCard());
+            }
+            if (player2.hasCards()) {
+                warCards.add(player2.drawCard());
+            }
+        }
+        RoundResult warResult = compareCards(player1, player2);
+        warResult.addCardsWon(warCards);
+        return warResult;
     }
 }

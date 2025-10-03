@@ -40,8 +40,33 @@ public class Game {
         RoundResult result = gameLogic.compareCards(player1, player2);
         if (result.isTie()) {
             System.out.println("It's a tie! War!");
+            startWar(result, player1, player2);
         } else {
             result.getWinner().addWonCards(result.getCardsWon());
+        }
+    }
+
+    private void startWar(RoundResult previousResult, Player player1, Player player2) {
+        if (player1.size() < 4) {
+            System.out.printf("%s does not have enough cards for war and loses.%n", player1.getName());
+            RoundResult gameOverResult = new RoundResult(player2, previousResult.getCardsWon());
+            gameOverResult.setGameOver(true);
+            player2.addWonCards(gameOverResult.getCardsWon());
+            return;
+        } else if (player2.size() < 4) {
+            System.out.printf("%s does not have enough cards for war and loses.%n", player2.getName());
+            RoundResult gameOverResult = new RoundResult(player1, previousResult.getCardsWon());
+            gameOverResult.setGameOver(true);
+            player1.addWonCards(gameOverResult.getCardsWon());
+            return;
+        }
+
+        RoundResult warResult = gameLogic.war(previousResult, player1, player2);
+        if (warResult.isTie()) {
+            System.out.println("War resulted in a tie! Another war!");
+            startWar(warResult, player1, player2);
+        } else {
+            warResult.getWinner().addWonCards(warResult.getCardsWon());
         }
     }
 
