@@ -31,8 +31,7 @@ public class GameLogic {
     }
 
     RoundResult war(RoundResult previousResult, Player player1, Player player2) {
-        List<Card> warCards = new LinkedList<>();
-        warCards.addAll(previousResult.getCardsWon());
+        List<Card> warCards = new LinkedList<>(previousResult.getCardsWon());
 
         for (int i = 0; i < 3; i++) {
             if (player1.hasCards()) {
@@ -42,6 +41,8 @@ public class GameLogic {
                 warCards.add(player2.drawCard());
             }
         }
+        System.out.printf("%s place [][][], %s place [][][]%n", player1.getName(), player2.getName());
+
         RoundResult warResult = compareCards(player1, player2);
         warResult.addCardsWon(warCards);
         return warResult;

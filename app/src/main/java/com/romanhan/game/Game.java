@@ -24,7 +24,9 @@ public class Game {
     public void game() {
         System.out.println("War game started");
         while (player1.hasCards() && player2.hasCards()) {
-            playRound();
+            if (!playRound()) {
+                break;
+            }
             System.out.printf("%s has %d cards, %s has %d cards%n", player1.getName(), player1.size(),
                     player2.getName(), player2.size());
             System.out.println("-------------------------");
@@ -36,38 +38,42 @@ public class Game {
         }
     }
 
-    private void playRound() {
+    private boolean playRound() {
         RoundResult result = gameLogic.compareCards(player1, player2);
         if (result.isTie()) {
             System.out.println("It's a tie! War!");
-            startWar(result, player1, player2);
-        } else {
-            result.getWinner().addWonCards(result.getCardsWon());
+            result = startWar(result, player1, player2);
+
+            if (result.isGameOver()) {
+                return false;
+            }
+
         }
+        result.getWinner().addWonCards(result.getCardsWon());
+        return true;
     }
 
-    private void startWar(RoundResult previousResult, Player player1, Player player2) {
+    private RoundResult startWar(RoundResult previousResult, Player player1, Player player2) {
         if (player1.size() < 4) {
             System.out.printf("%s does not have enough cards for war and loses.%n", player1.getName());
             RoundResult gameOverResult = new RoundResult(player2, previousResult.getCardsWon());
             gameOverResult.setGameOver(true);
             player2.addWonCards(gameOverResult.getCardsWon());
-            return;
+            return gameOverResult;
         } else if (player2.size() < 4) {
             System.out.printf("%s does not have enough cards for war and loses.%n", player2.getName());
             RoundResult gameOverResult = new RoundResult(player1, previousResult.getCardsWon());
             gameOverResult.setGameOver(true);
             player1.addWonCards(gameOverResult.getCardsWon());
-            return;
+            return gameOverResult;
         }
 
         RoundResult warResult = gameLogic.war(previousResult, player1, player2);
         if (warResult.isTie()) {
             System.out.println("War resulted in a tie! Another war!");
-            startWar(warResult, player1, player2);
-        } else {
-            warResult.getWinner().addWonCards(warResult.getCardsWon());
+            warResult = startWar(warResult, player1, player2);
         }
+        return warResult;
     }
 
     private void createPlayers(List<LinkedList<Card>> decks, String[] names) {
