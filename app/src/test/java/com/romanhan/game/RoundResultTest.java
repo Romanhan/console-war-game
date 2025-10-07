@@ -7,7 +7,7 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import com.romanhan.Player;
@@ -20,8 +20,8 @@ public class RoundResultTest {
     static LinkedList<Card> player1Cards;
     static LinkedList<Card> wonCards;
 
-    @BeforeAll
-    static void setUp() {
+    @BeforeEach
+    void setUp() {
         player1Cards = new LinkedList<>(
                 Arrays.asList(
                         new Card(Rank.ACE, Suit.HEART),
