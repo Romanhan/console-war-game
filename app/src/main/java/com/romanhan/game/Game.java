@@ -23,6 +23,7 @@ public class Game {
 
     public void game() {
         System.out.println("War game started");
+
         while (player1.hasCards() && player2.hasCards()) {
             if (!playRound()) {
                 break;
@@ -31,11 +32,9 @@ public class Game {
                     player2.getName(), player2.size());
             System.out.println("-------------------------");
         }
-        if (player1.hasCards()) {
-            System.out.printf("%s wins the game!%n", player1.getName());
-        } else {
-            System.out.printf("%s wins the game!%n", player2.getName());
-        }
+
+        Player gameWinner = player1.size() > player2.size() ? player1 : player2;
+        System.out.printf("%s wins the game!%n", gameWinner.getName());
     }
 
     private boolean playRound() {
@@ -47,7 +46,6 @@ public class Game {
             if (result.isGameOver()) {
                 return false;
             }
-
         }
         result.getWinner().addWonCards(result.getCardsWon());
         return true;
@@ -58,13 +56,11 @@ public class Game {
             System.out.printf("%s does not have enough cards for war and loses.%n", player1.getName());
             RoundResult gameOverResult = new RoundResult(player2, previousResult.getCardsWon());
             gameOverResult.setGameOver(true);
-            player2.addWonCards(gameOverResult.getCardsWon());
             return gameOverResult;
         } else if (player2.size() < 4) {
             System.out.printf("%s does not have enough cards for war and loses.%n", player2.getName());
             RoundResult gameOverResult = new RoundResult(player1, previousResult.getCardsWon());
             gameOverResult.setGameOver(true);
-            player1.addWonCards(gameOverResult.getCardsWon());
             return gameOverResult;
         }
 
